@@ -1,0 +1,74 @@
+use TruYum
+
+insert into MenuList values
+(1, 'Sandwich', 99.00, 'Yes',  '2017-03-15', 'Main Course', 'Yes'),
+(2, 'Burger', 129.00, 'Yes',  '2017-12-23', 'Main Course', 'No'),
+(3, 'Pizza', 149.00, 'Yes',  '2017-08-21', 'Main Course', 'No'),
+(4, 'French Fries', 57.00, 'No',  '2017-07-02', 'Starters', 'Yes'),
+(5, 'Chocolate Brownie', 32.00, 'Yes',  '2022-11-02', 'Dessert', 'Yes')
+
+go
+
+-- Menu List for Admin
+select itemName as 'Name',itemPrice as 'Price', checkStock as 'Active', itemExpiry as 'Date of Launch', itemCategory as 'Category', itemDeliveryStatus as 'Free Delivery'  from MenuList;
+go
+
+-- Menu List for Customers
+select itemName as 'Name', itemDeliveryStatus as 'Free Delivery', itemPrice as 'Price', itemCategory as 'Category' from MenuList;
+go
+
+-- Edit Menu Item
+update MenuList
+set 
+itemPrice = 97.00,
+itemExpiry = '2022-04-27'
+where itemName = 'Sandwich'
+go
+
+-- Adding Amins
+insert into Admin
+values
+(1, 'Anu'),
+(2, 'Praveen'),
+(3, 'Manisha')
+
+-- Displaying All Admins
+select adminId as 'Admin ID', adminName as 'Admin Name' from Admin;
+
+-- Adding Customers
+insert into Customers
+values
+(1, 'Anuj Bhasin'),
+(2, 'Sachin Mehndiratta'),
+(3, 'Rahul V'),
+(4, 'Namrata Ghosh'),
+(5, 'Shanaya Jain'),
+(6, 'Harshita Singh')
+go
+
+-- Displaying the List of Customers
+select customerId as 'Customer ID', customerName as 'Customer Name' from Customers
+go
+
+
+-- Adding Data in Customer Cart
+
+insert into customerCart 
+values
+(4, 1), (2, 1), (3,1), (5,1),
+(1, 2),
+(4, 3), (2, 3),
+(3, 4),(5, 4),
+(4, 5), (2, 5),
+(1, 6), (4, 6)
+
+go
+
+-- Extracting the Cart Details 
+select c.customerName as 'Customer Name', m.itemName as 'Item Name', m.itemDeliveryStatus as 'Free Delivery',  m.itemPrice as 'Price' from customerCart cc
+inner join MenuList m
+on cc.itemId = m.itemId
+inner join Customers c
+on c.customerId = cc.customerId
+
+go
